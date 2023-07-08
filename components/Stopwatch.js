@@ -1,10 +1,11 @@
 import { useState, useRef, useCallback } from 'react';
 import { StyleSheet, SafeAreaView, Text, View, Platform } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
 import Constants from 'expo-constants';
 import Result from './Result';
+import Bibs from './Bibs';
 import Control from './Control';
 import displayTime from './displayTime';
+import getRunners from './getRunners';
 import MyHeader from './Header';
 
 export default function StopWatch() {
@@ -12,6 +13,8 @@ export default function StopWatch() {
   const [isRunning, setRunning] = useState(false);
   const [results, setResults] = useState([]);
   const timer = useRef(null);
+
+  const runners = getRunners();
 
   const handleLeftButtonPress = useCallback(() => {
     if (isRunning) {
@@ -37,9 +40,11 @@ export default function StopWatch() {
   return (
     <SafeAreaView style={styles.container}>
       <MyHeader />
-      <StatusBar />
       <View style={styles.display}>
         <Text style={styles.displayText}>{displayTime(time)}</Text>
+      </View>
+      <View style={styles.bibs}>
+        <Bibs isRunning={isRunning} runners={runners} />
       </View>
       <View style={styles.control}>
         <Control
@@ -62,7 +67,7 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
   },
   display: {
-    flex: 3 / 5,
+    flex: 1 / 5,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -71,6 +76,10 @@ const styles = StyleSheet.create({
     fontSize: 70,
     fontWeight: '200',
     fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : null,
+  },
+  bibs: {
+    flex: 2 / 5,
+    flexDirection: 'row',
   },
   control: {
     height: 70,

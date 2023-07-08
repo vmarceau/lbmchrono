@@ -1,32 +1,26 @@
-import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React from 'react';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 function Control({ isRunning, handleLeftButtonPress, handleRightButtonPress }) {
   return (
     <>
       <TouchableOpacity
-        style={[
-          styles.controlButtonBorder,
-          { backgroundColor: isRunning ? "#333333" : "#1c1c1e" },
-        ]}
+        style={[styles.controlButtonBorder, { backgroundColor: isRunning ? '#333333' : '#1c1c1e' }]}
         onPress={handleLeftButtonPress}
       >
         <View style={styles.controlButton}>
-          <Text style={{ color: isRunning ? "#fff" : "#9d9ca2" }}>
-            {isRunning ? "Lap" : "Reset"}
+          <Text style={{ color: isRunning ? '#fff' : '#9d9ca2' }}>
+            {isRunning ? 'Lap' : 'Reset'}
           </Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        style={[
-          styles.controlButtonBorder,
-          { backgroundColor: isRunning ? "#340e0d" : "#0a2a12" },
-        ]}
+        style={[styles.controlButtonBorder, { backgroundColor: isRunning ? '#340e0d' : '#0a2a12' }]}
         onPress={handleRightButtonPress}
       >
         <View style={styles.controlButton}>
-          <Text style={{ color: isRunning ? "#ea4c49" : "#37d05c" }}>
-            {isRunning ? "Stop" : "Start"}
+          <Text style={{ color: isRunning ? '#ea4c49' : '#37d05c' }}>
+            {isRunning ? 'Stop' : 'Start'}
           </Text>
         </View>
       </TouchableOpacity>
@@ -35,8 +29,8 @@ function Control({ isRunning, handleLeftButtonPress, handleRightButtonPress }) {
 }
 
 const CENTER = {
-  justifyContent: "center",
-  alignItems: "center",
+  justifyContent: 'center',
+  alignItems: 'center',
 };
 
 const styles = StyleSheet.create({
@@ -51,7 +45,7 @@ const styles = StyleSheet.create({
     width: 65,
     height: 65,
     borderRadius: 65,
-    borderColor: "#000",
+    borderColor: '#000',
     borderWidth: 1,
   },
 });

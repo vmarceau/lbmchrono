@@ -5,16 +5,32 @@ import Result from './Result';
 import Bibs from './Bibs';
 import Control from './Control';
 import displayTime from './displayTime';
-import getRunners from './getRunners';
 import MyHeader from './Header';
 
 export default function StopWatch() {
   const [time, setTime] = useState(0);
   const [isRunning, setRunning] = useState(false);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState(
+    [...Array(56).keys()].map((i) => ({
+      id: i + 1,
+      time: null,
+    }))
+  );
   const timer = useRef(null);
 
-  const runners = getRunners();
+  // const handleBibButtonPress = useCallback(
+  //   (id) => {
+  //     if (!isRunning) {
+  //       return;
+  //     }
+
+  //     const newResults = [...results].map((r) =>
+  //       r.id === id ? { ...r, time: r.time === null ? time : null } : r
+  //     );
+  //     setResults(newResults);
+  //   },
+  //   [isRunning, time, results]
+  // );
 
   const handleLeftButtonPress = useCallback(() => {
     if (isRunning) {
@@ -44,7 +60,7 @@ export default function StopWatch() {
         <Text style={styles.displayText}>{displayTime(time)}</Text>
       </View>
       <View style={styles.bibs}>
-        <Bibs isRunning={isRunning} runners={runners} />
+        <Bibs results={results} handleBibButtonPress={() => {}} />
       </View>
       <View style={styles.control}>
         <Control
@@ -67,7 +83,7 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
   },
   display: {
-    flex: 1 / 5,
+    flex: 1 / 6,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -78,13 +94,13 @@ const styles = StyleSheet.create({
     fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : null,
   },
   bibs: {
-    flex: 2 / 5,
+    flex: 3 / 6,
     flexDirection: 'row',
   },
   control: {
-    height: 70,
+    height: 50,
     flexDirection: 'row',
     justifyContent: 'space-around',
   },
-  result: { flex: 2 / 5 },
+  result: { flex: 2 / 6 },
 });

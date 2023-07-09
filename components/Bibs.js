@@ -1,15 +1,15 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-function Bibs({ isRunning, runners }) {
-  const bibs = runners.map((runner) => (
+function Bibs({ results, handleBibButtonPress }) {
+  const bibs = results.map((result) => (
     <TouchableOpacity
-      key={runner.id}
-      style={[styles.controlButtonBorder, { backgroundColor: runner.time ? '#333333' : '#002e56' }]}
-      onPress={isRunning ? () => {} : () => {}}
+      key={result.id}
+      style={[styles.controlButtonBorder, { backgroundColor: result.time ? '#333333' : '#002e56' }]}
+      onPress={() => handleBibButtonPress(result.id)}
     >
       <View style={styles.controlButton}>
-        <Text style={{ color: runner.time ? '#fff' : '#0088ff' }}>{`${runner.id}`}</Text>
+        <Text style={{ color: result.time ? '#fff' : '#0088ff' }}>{`${result.id}`}</Text>
       </View>
     </TouchableOpacity>
   ));
@@ -32,16 +32,16 @@ const styles = StyleSheet.create({
   },
   controlButtonBorder: {
     ...CENTER,
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-    margin: 5
+    width: 30,
+    height: 30,
+    borderRadius: 30,
+    margin: 5,
   },
   controlButton: {
     ...CENTER,
-    width: 35,
-    height: 35,
-    borderRadius: 35,
+    width: 25,
+    height: 25,
+    borderRadius: 25,
     borderColor: '#000',
     borderWidth: 1,
   },

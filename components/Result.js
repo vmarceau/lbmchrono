@@ -6,12 +6,15 @@ function Result({ results }) {
   return (
     <ScrollView>
       <View style={styles.resultItem} />
-      {results.map((item, index) => (
-        <View key={item} style={styles.resultItem}>
-          <Text style={styles.resultItemText}>Lap {results.length - index}</Text>
-          <Text style={styles.resultItemText}>{displayTime(item)}</Text>
-        </View>
-      ))}
+      {[...results]
+        .filter((r) => r.time !== null)
+        .sort((l, r) => l.time - r.time)
+        .map((r) => (
+          <View key={r.id} style={styles.resultItem}>
+            <Text style={styles.resultItemText}>Bib #{r.id}</Text>
+            <Text style={styles.resultItemText}>{displayTime(r.time)}</Text>
+          </View>
+        ))}
     </ScrollView>
   );
 }

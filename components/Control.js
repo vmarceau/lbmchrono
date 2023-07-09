@@ -1,22 +1,52 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-function Control({ isRunning, handleLeftButtonPress, handleRightButtonPress }) {
-  return (
-    <>
+function Control({
+  isRunning,
+  handleResetButtonPress,
+  handleStartStopButtonPress,
+  handleSaveButtonPress,
+}) {
+  const renderReset = () => {
+    if (isRunning) {
+      return undefined;
+    }
+
+    return (
       <TouchableOpacity
-        style={[styles.controlButtonBorder, { backgroundColor: isRunning ? '#333333' : '#1c1c1e' }]}
-        onPress={handleLeftButtonPress}
+        style={[styles.controlButtonBorder, { backgroundColor: '#1c1c1e' }]}
+        onPress={handleResetButtonPress}
       >
         <View style={styles.controlButton}>
-          <Text style={{ color: isRunning ? '#fff' : '#9d9ca2' }}>
-            {isRunning ? 'Lap' : 'Reset'}
-          </Text>
+          <Text style={{ color: '#9d9ca2' }}>Reset</Text>
         </View>
       </TouchableOpacity>
+    );
+  };
+
+  const renderSave = () => {
+    if (isRunning) {
+      return undefined;
+    }
+
+    return (
+      <TouchableOpacity
+        style={[styles.controlButtonBorder, { backgroundColor: '#1c1c1e' }]}
+        onPress={handleSaveButtonPress}
+      >
+        <View style={styles.controlButton}>
+          <Text style={{ color: '#9d9ca2' }}>Save</Text>
+        </View>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <>
+      {renderReset()}
       <TouchableOpacity
         style={[styles.controlButtonBorder, { backgroundColor: isRunning ? '#340e0d' : '#0a2a12' }]}
-        onPress={handleRightButtonPress}
+        onPress={handleStartStopButtonPress}
       >
         <View style={styles.controlButton}>
           <Text style={{ color: isRunning ? '#ea4c49' : '#37d05c' }}>
@@ -24,6 +54,7 @@ function Control({ isRunning, handleLeftButtonPress, handleRightButtonPress }) {
           </Text>
         </View>
       </TouchableOpacity>
+      {renderSave()}
     </>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, ScrollView, View } from 'react-native';
-import displayTime from './displayTime';
+import { displayTime } from './utils';
 
 function Result({ results }) {
   return (
@@ -9,12 +9,14 @@ function Result({ results }) {
       {[...results]
         .filter((r) => r.time !== null)
         .sort((l, r) => l.time - r.time)
-        .map((r) => (
+        .map((r, idx) => (
           <View key={r.id} style={styles.resultItem}>
+            <Text style={styles.resultItemText}>Rank {idx + 1}</Text>
             <Text style={styles.resultItemText}>Bib #{r.id}</Text>
             <Text style={styles.resultItemText}>{displayTime(r.time)}</Text>
           </View>
-        ))}
+        ))
+        .reverse()}
     </ScrollView>
   );
 }

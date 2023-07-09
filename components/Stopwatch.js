@@ -4,48 +4,49 @@ import Constants from 'expo-constants';
 import Result from './Result';
 import Bibs from './Bibs';
 import Control from './Control';
-import displayTime from './displayTime';
+import { displayTime, initResults } from './utils';
 import MyHeader from './Header';
 
 export default function StopWatch() {
   const [time, setTime] = useState(0);
   const [isRunning, setRunning] = useState(false);
-  const [results, setResults] = useState(
-    [...Array(56).keys()].map((i) => ({
-      id: i + 1,
-      time: null,
-    }))
-  );
+  const [results, setResults] = useState(initResults());
   const timer = useRef(null);
 
-  // const handleBibButtonPress = useCallback(
-  //   (id) => {
-  //     if (!isRunning) {
-  //       return;
-  //     }
+  const handleBibButtonPress = useCallback(
+    (id) => {
+      if (!isRunning) {
+        return;
+      }
 
-  //     const newResults = [...results].map((r) =>
-  //       r.id === id ? { ...r, time: r.time === null ? time : null } : r
-  //     );
-  //     setResults(newResults);
-  //   },
-  //   [isRunning, time, results]
-  // );
+      const newResults = [...results].map((r) =>
+        r.id === id ? { ...r, time: r.time === null ? time : null } : r
+      );
+      setResults(newResults);
+    },
+    [isRunning, time, results]
+  );
 
-  const handleLeftButtonPress = useCallback(() => {
+  const handleResetButtonPress = useCallback(() => {
     if (isRunning) {
-      setResults((previousResults) => [time, ...previousResults]);
-    } else {
-      setResults([]);
-      setTime(0);
+      return;
     }
-  }, [isRunning, time]);
+    setResults(initResults());
+    setTime(0);
+  }, [isRunning]);
 
-  const handleRightButtonPress = useCallback(() => {
+  const handleSaveButtonPress = useCallback(() => {
+    if (isRunning) {
+      return;
+    }
+    console.log('Not implemented');
+  }, [isRunning]);
+
+  const handleStartStopButtonPress = useCallback(() => {
     if (!isRunning) {
       const interval = setInterval(() => {
         setTime((previousTime) => previousTime + 1);
-      }, 10);
+      }, 1000);
       timer.current = interval;
     } else {
       clearInterval(timer.current);
@@ -60,13 +61,14 @@ export default function StopWatch() {
         <Text style={styles.displayText}>{displayTime(time)}</Text>
       </View>
       <View style={styles.bibs}>
-        <Bibs results={results} handleBibButtonPress={() => {}} />
+        <Bibs results={results} handleBibButtonPress={handleBibButtonPress} />
       </View>
       <View style={styles.control}>
         <Control
           isRunning={isRunning}
-          handleLeftButtonPress={handleLeftButtonPress}
-          handleRightButtonPress={handleRightButtonPress}
+          handleResetButtonPress={handleResetButtonPress}
+          handleStartStopButtonPress={handleStartStopButtonPress}
+          handleSaveButtonPress={handleSaveButtonPress}
         />
       </View>
       <View style={styles.result}>

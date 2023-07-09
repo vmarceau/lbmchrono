@@ -1,5 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  COLOR_SECONDARY_BTN_BG,
+  COLOR_SECONDARY_BTN_TEXT,
+  COLOR_START_BTN_BG,
+  COLOR_START_BTN_TEXT,
+  COLOR_STOP_BTN_BG,
+  COLOR_STOP_BTN_TEXT,
+} from './constants';
 
 function Control({
   isRunning,
@@ -14,11 +22,11 @@ function Control({
 
     return (
       <TouchableOpacity
-        style={[styles.controlButtonBorder, { backgroundColor: '#1c1c1e' }]}
+        style={[styles.controlButtonBorder, { backgroundColor: COLOR_SECONDARY_BTN_BG }]}
         onPress={handleResetButtonPress}
       >
         <View style={styles.controlButton}>
-          <Text style={{ color: '#9d9ca2' }}>Reset</Text>
+          <Text style={{ color: COLOR_SECONDARY_BTN_TEXT }}>Reset</Text>
         </View>
       </TouchableOpacity>
     );
@@ -31,11 +39,11 @@ function Control({
 
     return (
       <TouchableOpacity
-        style={[styles.controlButtonBorder, { backgroundColor: '#1c1c1e' }]}
+        style={[styles.controlButtonBorder, { backgroundColor: COLOR_SECONDARY_BTN_BG }]}
         onPress={handleSaveButtonPress}
       >
         <View style={styles.controlButton}>
-          <Text style={{ color: '#9d9ca2' }}>Save</Text>
+          <Text style={{ color: COLOR_SECONDARY_BTN_TEXT }}>Save</Text>
         </View>
       </TouchableOpacity>
     );
@@ -45,11 +53,14 @@ function Control({
     <>
       {renderReset()}
       <TouchableOpacity
-        style={[styles.controlButtonBorder, { backgroundColor: isRunning ? '#340e0d' : '#0a2a12' }]}
+        style={[
+          styles.controlButtonBorder,
+          { backgroundColor: isRunning ? COLOR_STOP_BTN_BG : COLOR_START_BTN_BG },
+        ]}
         onPress={handleStartStopButtonPress}
       >
         <View style={styles.controlButton}>
-          <Text style={{ color: isRunning ? '#ea4c49' : '#37d05c' }}>
+          <Text style={{ color: isRunning ? COLOR_STOP_BTN_TEXT : COLOR_START_BTN_TEXT }}>
             {isRunning ? 'Stop' : 'Start'}
           </Text>
         </View>

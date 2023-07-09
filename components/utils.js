@@ -1,17 +1,26 @@
+import { NUM_BIBS } from './constants';
+
 const pad = (number) => (number <= 9 ? `0${number}` : number);
 
-export const displayTime = (seconds) => {
+export const getElapsedTime = (startTime) => Date.now() - startTime;
+
+export const displayTime = (ms) => {
+  if (!ms) {
+    return '00:00';
+  }
+
+  const seconds = Math.round(ms / 1000);
   if (seconds < 60) {
     return `00:${pad(seconds)}`;
   }
 
-  const remainSeconds = seconds % 60;
-  const minutes = (seconds - remainSeconds) / 60;
-  return `${pad(minutes)}:${pad(remainSeconds)}`;
+  const remain = seconds % 60;
+  const minutes = (seconds - remain) / 60;
+  return `${pad(minutes)}:${pad(remain)}`;
 };
 
 export const initResults = () =>
-  [...Array(56).keys()].map((i) => ({
+  [...Array(NUM_BIBS).keys()].map((i) => ({
     id: i + 1,
-    time: null,
+    elapsed: null,
   }));

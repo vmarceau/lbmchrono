@@ -1,15 +1,26 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import {
+  COLOR_BIB_BTN_BG,
+  COLOR_BIB_BTN_TEXT,
+  COLOR_SECONDARY_BTN_BG,
+  COLOR_SECONDARY_BTN_TEXT,
+} from './constants';
 
 function Bibs({ results, handleBibButtonPress }) {
-  const bibs = results.map((result) => (
+  const bibs = results.map((r) => (
     <TouchableOpacity
-      key={result.id}
-      style={[styles.controlButtonBorder, { backgroundColor: result.time ? '#333333' : '#002e56' }]}
-      onPress={() => handleBibButtonPress(result.id)}
+      key={r.id}
+      style={[
+        styles.controlButtonBorder,
+        { backgroundColor: r.elapsed ? COLOR_SECONDARY_BTN_BG : COLOR_BIB_BTN_BG },
+      ]}
+      onPress={() => handleBibButtonPress(r.id)}
     >
       <View style={styles.controlButton}>
-        <Text style={{ color: result.time ? '#fff' : '#0088ff' }}>{`${result.id}`}</Text>
+        <Text
+          style={{ color: r.elapsed ? COLOR_SECONDARY_BTN_TEXT : COLOR_BIB_BTN_TEXT }}
+        >{`${r.id}`}</Text>
       </View>
     </TouchableOpacity>
   ));

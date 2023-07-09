@@ -7,13 +7,13 @@ function Result({ results }) {
     <ScrollView>
       <View style={styles.resultItem} />
       {[...results]
-        .filter((r) => r.time !== null)
-        .sort((l, r) => l.time - r.time)
+        .filter((r) => r.elapsed !== null)
+        .sort((l, r) => l.elapsed - r.elapsed)
         .map((r, idx) => (
           <View key={r.id} style={styles.resultItem}>
             <Text style={styles.resultItemText}>Rank {idx + 1}</Text>
             <Text style={styles.resultItemText}>Bib #{r.id}</Text>
-            <Text style={styles.resultItemText}>{displayTime(r.time)}</Text>
+            <Text style={styles.resultItemText}>{displayTime(r.elapsed)}</Text>
           </View>
         ))
         .reverse()}

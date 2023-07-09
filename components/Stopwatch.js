@@ -4,14 +4,15 @@ import Constants from 'expo-constants';
 import Result from './Result';
 import Bibs from './Bibs';
 import Control from './Control';
-import { displayTime, initResults } from './utils';
+import { displayTime, getElapsedTime, initResults } from './utils';
 import MyHeader from './Header';
 
-export default function StopWatch() {
-  const [time, setTime] = useState(0);
+export default function Stopwatch() {
+  const startTime = useRef(null);
+  const timer = useRef(null);
+  const [elapsedTime, setElapsedTime] = useState(null);
   const [isRunning, setRunning] = useState(false);
   const [results, setResults] = useState(initResults());
-  const timer = useRef(null);
 
   const handleBibButtonPress = useCallback(
     (id) => {
@@ -20,45 +21,56 @@ export default function StopWatch() {
       }
 
       const newResults = [...results].map((r) =>
-        r.id === id ? { ...r, time: r.time === null ? time : null } : r
+        r.id === id
+          ? { ...r, elapsed: r.elapsed === null ? getElapsedTime(startTime.current) : null }
+          : r
       );
       setResults(newResults);
     },
-    [isRunning, time, results]
+    [isRunning, results]
   );
 
   const handleResetButtonPress = useCallback(() => {
     if (isRunning) {
       return;
     }
+
+    startTime.current = null;
+    setElapsedTime(null);
     setResults(initResults());
-    setTime(0);
   }, [isRunning]);
 
   const handleSaveButtonPress = useCallback(() => {
     if (isRunning) {
       return;
     }
+
     console.log('Not implemented');
   }, [isRunning]);
 
   const handleStartStopButtonPress = useCallback(() => {
     if (!isRunning) {
+      startTime.current = Date.now();
       const interval = setInterval(() => {
-        setTime((previousTime) => previousTime + 1);
-      }, 1000);
+        setElapsedTime((prev) => {
+          const next = getElapsedTime(startTime.current);
+          // Avoid updating elapsed time state too often to minimize rendering
+          return next - prev > 1000 ? next : prev;
+        });
+      }, 100);
       timer.current = interval;
     } else {
       clearInterval(timer.current);
     }
-    setRunning((previousState) => !previousState);
+
+    setRunning((prev) => !prev);
   }, [isRunning]);
 
   return (
     <SafeAreaView style={styles.container}>
       <MyHeader />
       <View style={styles.display}>
-        <Text style={styles.displayText}>{displayTime(time)}</Text>
+        <Text style={styles.displayText}>{displayTime(elapsedTime)}</Text>
       </View>
       <View style={styles.bibs}>
         <Bibs results={results} handleBibButtonPress={handleBibButtonPress} />

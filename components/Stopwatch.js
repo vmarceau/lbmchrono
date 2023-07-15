@@ -1,6 +1,8 @@
+/* eslint-disable react/style-prop-object */
 import { useState, useRef, useCallback } from 'react';
 import { StyleSheet, SafeAreaView, Text, View, Platform } from 'react-native';
 import Constants from 'expo-constants';
+import { StatusBar } from 'expo-status-bar';
 import Result from './Result';
 import Bibs from './Bibs';
 import Control from './Control';
@@ -68,6 +70,7 @@ export default function Stopwatch() {
 
   return (
     <SafeAreaView style={styles.container}>
+      <StatusBar style="light" />
       <MyHeader />
       <View style={styles.display}>
         <Text style={styles.displayText}>{displayTime(elapsedTime)}</Text>

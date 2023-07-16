@@ -31,25 +31,38 @@ export const formatRaceResults = (startTime, results) => {
   const startedAt = new Date(startTime);
   const metadata = {
     deviceManufacturer: Device.manufacturer,
-    deviceModelId: Device.modelId,
+    deviceName: Device.deviceName,
     deviceModelName: Device.modelName,
     deviceOsVersion: Device.osVersion,
     sessionId: Constants.sessionId,
   };
-  const finishers = [...results]
-    .filter((r) => r.elapsed !== null)
-    .sort((l, r) => l.elapsed - r.elapsed)
+  const leaderboard = [...results]
+    .sort((l, r) => {
+      // if equal, sort by bib
+      if (l.elapsed === r.elapsed) {
+        return l.id - r.id;
+      }
+      // always put DNF last
+      if (l.elapsed === null) {
+        return 1;
+      }
+      if (r.elapsed === null) {
+        return -1;
+      }
+
+      return l.elapsed - r.elapsed;
+    })
     .map((r, idx) => ({
       rank: idx + 1,
       bib: r.id,
-      elapsed: displayTime(r.elapsed),
-      finishedAt: new Date(startTime + r.elapsed).toISOString(),
+      elapsed: r.elapsed === null ? 'DNF' : displayTime(r.elapsed),
+      finishedAt: r.elapsed === null ? 'DNF' : new Date(startTime + r.elapsed).toISOString(),
     }));
 
   return {
     race: 'Limoilou Beer Mile',
     startedAt: startedAt.toISOString(),
     metadata,
-    finishers,
+    leaderboard,
   };
 };

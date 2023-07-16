@@ -37,6 +37,7 @@
         "variables": false
       }
     ],
+    "no-nested-ternary": "off",
     "react/prop-types": "off"
   }
 }

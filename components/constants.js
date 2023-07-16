@@ -1,6 +1,11 @@
 // Number of runners
 export const NUM_BIBS = 56;
 
+// Results export
+export const EMAIL_SUBJECT = 'Résultats LBM';
+export const EMAIL_BODY = 'Voir résultats en pièce jointe.';
+export const EMAIL_RECIPIENTS = process.env.EXPO_PUBLIC_EMAIL_RECIPIENTS;
+
 // Colors
 export const COLOR_BIB_BTN_BG = '#002e56';
 export const COLOR_BIB_BTN_TEXT = '#0088ff';

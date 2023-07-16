@@ -1,13 +1,16 @@
 /* eslint-disable react/style-prop-object */
 import { useState, useRef, useCallback } from 'react';
-import { StyleSheet, SafeAreaView, Text, View, Platform } from 'react-native';
+import { Alert, StyleSheet, SafeAreaView, Text, View, Platform } from 'react-native';
 import Constants from 'expo-constants';
 import { StatusBar } from 'expo-status-bar';
+import * as MailComposer from 'expo-mail-composer';
+import * as FileSystem from 'expo-file-system';
 import Result from './Result';
 import Bibs from './Bibs';
 import Control from './Control';
-import { displayTime, getElapsedTime, initResults } from './utils';
+import { displayTime, formatRaceResults, getElapsedTime, initResults } from './utils';
 import MyHeader from './Header';
+import { EMAIL_BODY, EMAIL_RECIPIENTS, EMAIL_SUBJECT } from './constants';
 
 export default function Stopwatch() {
   const startTime = useRef(null);
@@ -42,24 +45,45 @@ export default function Stopwatch() {
     setResults(initResults());
   }, [isRunning]);
 
-  const handleSaveButtonPress = useCallback(() => {
-    if (isRunning) {
+  const handleSaveButtonPress = useCallback(async () => {
+    if (isRunning || !startTime.current) {
       return;
     }
 
-    console.log('Not implemented');
-  }, [isRunning]);
+    const isAvailable = await MailComposer.isAvailableAsync();
+    if (!isAvailable) {
+      Alert.alert('Not available', 'Please configure an email account on your phone', [
+        { text: 'I understand', onPress: () => {} },
+      ]);
+      return;
+    }
+
+    const finalResults = formatRaceResults(startTime.current, results);
+
+    const uri = `${FileSystem.documentDirectory}LBM_${new Date().toISOString()}.json`;
+    await FileSystem.writeAsStringAsync(uri, JSON.stringify(finalResults, null, 2));
+
+    MailComposer.composeAsync({
+      subject: EMAIL_SUBJECT,
+      body: EMAIL_BODY,
+      recipients: EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS.split(',') : undefined,
+      attachments: [uri],
+    });
+  }, [isRunning, results]);
 
   const handleStartStopButtonPress = useCallback(() => {
     if (!isRunning) {
-      startTime.current = Date.now();
+      if (!startTime.current) {
+        startTime.current = Date.now();
+      }
+
       const interval = setInterval(() => {
         setElapsedTime((prev) => {
           const next = getElapsedTime(startTime.current);
           // Avoid updating elapsed time state too often to minimize rendering
           return next - prev > 1000 ? next : prev;
         });
-      }, 100);
+      }, 50);
       timer.current = interval;
     } else {
       clearInterval(timer.current);
@@ -81,6 +105,7 @@ export default function Stopwatch() {
       <View style={styles.control}>
         <Control
           isRunning={isRunning}
+          isResults={!!startTime.current}
           handleResetButtonPress={handleResetButtonPress}
           handleStartStopButtonPress={handleStartStopButtonPress}
           handleSaveButtonPress={handleSaveButtonPress}

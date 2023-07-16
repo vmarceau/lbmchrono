@@ -1,3 +1,5 @@
+import Constants from 'expo-constants';
+import * as Device from 'expo-device';
 import { NUM_BIBS } from './constants';
 
 const pad = (number) => (number <= 9 ? `0${number}` : number);
@@ -24,3 +26,30 @@ export const initResults = () =>
     id: i + 1,
     elapsed: null,
   }));
+
+export const formatRaceResults = (startTime, results) => {
+  const startedAt = new Date(startTime);
+  const metadata = {
+    deviceManufacturer: Device.manufacturer,
+    deviceModelId: Device.modelId,
+    deviceModelName: Device.modelName,
+    deviceOsVersion: Device.osVersion,
+    sessionId: Constants.sessionId,
+  };
+  const finishers = [...results]
+    .filter((r) => r.elapsed !== null)
+    .sort((l, r) => l.elapsed - r.elapsed)
+    .map((r, idx) => ({
+      rank: idx + 1,
+      bib: r.id,
+      elapsed: displayTime(r.elapsed),
+      finishedAt: new Date(startTime + r.elapsed).toISOString(),
+    }));
+
+  return {
+    race: 'Limoilou Beer Mile',
+    startedAt: startedAt.toISOString(),
+    metadata,
+    finishers,
+  };
+};

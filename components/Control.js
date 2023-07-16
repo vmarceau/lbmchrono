@@ -11,12 +11,13 @@ import {
 
 function Control({
   isRunning,
+  isResults,
   handleResetButtonPress,
   handleStartStopButtonPress,
   handleSaveButtonPress,
 }) {
   const renderReset = () => {
-    if (isRunning) {
+    if (isRunning || !isResults) {
       return undefined;
     }
 
@@ -33,7 +34,7 @@ function Control({
   };
 
   const renderSave = () => {
-    if (isRunning) {
+    if (isRunning || !isResults) {
       return undefined;
     }
 
@@ -61,7 +62,7 @@ function Control({
       >
         <View style={styles.controlButton}>
           <Text style={{ color: isRunning ? COLOR_STOP_BTN_TEXT : COLOR_START_BTN_TEXT }}>
-            {isRunning ? 'Stop' : 'Start'}
+            {isRunning ? 'Stop' : isResults ? 'Resume' : 'Start'}
           </Text>
         </View>
       </TouchableOpacity>

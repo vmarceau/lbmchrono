@@ -95,7 +95,6 @@ export default function Stopwatch() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
-      <MyHeader />
       <View style={styles.display}>
         <Text style={styles.displayText}>{displayTime(elapsedTime)}</Text>
       </View>
@@ -121,28 +120,29 @@ export default function Stopwatch() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'black',
+    backgroundColor: '#000',
     paddingTop: Constants.statusBarHeight,
   },
   display: {
-    flex: 1 / 6,
+    flex: 2 / 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   displayText: {
     color: '#fff',
-    fontSize: 70,
-    fontWeight: '200',
+    fontSize: 80,
+    fontWeight: '300',
     fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : null,
   },
   bibs: {
-    flex: 3 / 6,
+    flex: 5 / 10,
     flexDirection: 'row',
   },
   control: {
     height: 50,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    backgroundColor: '#000',
   },
-  result: { flex: 2 / 6 },
+  result: { flex: 3 / 10 },
 });

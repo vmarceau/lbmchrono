@@ -1,11 +1,23 @@
-import { Appbar } from 'react-native-paper';
+import { Image, StyleSheet, View } from 'react-native';
 
-function MyHeader() {
+function BmHeader() {
   return (
-    <Appbar.Header style={{ backgroundColor: '#817f7c', height: 35 }}>
-      <Appbar.Content title="🏃 Limoilou Beer Mile 🍺" color='#fff' style={{ alignItems: 'center' }} />
-    </Appbar.Header>
+    <View style={styles.container}>
+      <Image
+        source={require('../assets/lbmheader.png')}
+        style={{ marginVertical: 10, resizeMode: 'center' }}
+      />
+    </View>
   );
 }
 
-export default MyHeader;
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
+    height: 72,
+  },
+});
+
+export default BmHeader;

@@ -9,7 +9,7 @@ import Result from './Result';
 import Bibs from './Bibs';
 import Control from './Control';
 import { displayTime, formatRaceResults, getElapsedTime, initResults } from './utils';
-import MyHeader from './Header';
+import BmHeader from './Header';
 import { EMAIL_BODY, EMAIL_RECIPIENTS, EMAIL_SUBJECT } from './constants';
 
 export default function Stopwatch() {
@@ -95,6 +95,9 @@ export default function Stopwatch() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="light" />
+      <View style={styles.header}>
+        <BmHeader />
+      </View>
       <View style={styles.display}>
         <Text style={styles.displayText}>{displayTime(elapsedTime)}</Text>
       </View>
@@ -123,16 +126,25 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     paddingTop: Constants.statusBarHeight,
   },
-  display: {
-    flex: 2 / 10,
+  header: {
+    flex: 3 / 20,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#000',
+  },
+  display: {
+    flex: 3 / 20,
+    marginBottom: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000',
   },
   displayText: {
     color: '#fff',
     fontSize: 80,
     fontWeight: '300',
     fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : null,
+    includeFontPadding: false,
   },
   bibs: {
     flex: 5 / 10,
@@ -144,5 +156,5 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     backgroundColor: '#000',
   },
-  result: { flex: 3 / 10 },
+  result: { flex: 5 / 20 },
 });

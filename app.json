@@ -7,9 +7,9 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/lbmlogo.png",
+      "image": "./assets/lbmlogow.png",
       "resizeMode": "contain",
-      "backgroundColor": "#817f7c"
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "**/*"

@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import * as SplashScreen from 'expo-splash-screen';
+import * as NavigationBar from 'expo-navigation-bar';
 import Stopwatch from './components/Stopwatch';
 
 SplashScreen.preventAutoHideAsync();
@@ -10,7 +11,13 @@ export default function App() {
   const [appIsReady, setAppIsReady] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => setAppIsReady(true), 1000);
+    const init = async () => {
+      await NavigationBar.setBackgroundColorAsync('black');
+
+      setTimeout(() => setAppIsReady(true), 1000);
+    };
+
+    init();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {

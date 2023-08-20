@@ -44,7 +44,7 @@ function Control({
         onPress={handleSaveButtonPress}
       >
         <View style={styles.controlButton}>
-          <Text style={{ color: COLOR_SECONDARY_BTN_TEXT }}>Save</Text>
+          <Text style={{ color: COLOR_SECONDARY_BTN_TEXT }}>Send</Text>
         </View>
       </TouchableOpacity>
     );

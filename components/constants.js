@@ -3,7 +3,7 @@ export const NUM_BIBS = 56;
 
 // Results export
 export const EMAIL_SUBJECT = 'Résultats LBM';
-export const EMAIL_BODY = 'Voir résultats en pièce jointe.';
+export const EMAIL_BODY = 'Résultats complets en pièce jointe.';
 export const EMAIL_RECIPIENTS = process.env.EXPO_PUBLIC_EMAIL_RECIPIENTS;
 
 // Colors

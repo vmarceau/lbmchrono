@@ -65,9 +65,12 @@ export default function Stopwatch() {
 
     MailComposer.composeAsync({
       subject: EMAIL_SUBJECT,
-      body: EMAIL_BODY,
+      body: `${EMAIL_BODY}\n\n---\n${finalResults.leaderboard
+        .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.elapsed}`)
+        .join('\n')}`,
       recipients: EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS.split(',') : undefined,
       attachments: [uri],
+      isHtml: false,
     });
   }, [isRunning, results]);
 
@@ -127,34 +130,34 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
   },
   header: {
-    flex: 3 / 20,
+    flex: 12 / 100,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',
   },
   display: {
-    flex: 3 / 20,
-    marginBottom: 10,
+    flex: 12 / 100,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',
   },
   displayText: {
     color: '#fff',
-    fontSize: 80,
+    fontSize: 72,
     fontWeight: '300',
     fontFamily: Platform.OS === 'ios' ? 'Helvetica Neue' : null,
     includeFontPadding: false,
   },
   bibs: {
-    flex: 5 / 10,
+    flex: 40 / 100,
     flexDirection: 'row',
   },
   control: {
-    height: 50,
+    flex: 14 / 100,
     flexDirection: 'row',
     justifyContent: 'space-around',
+    alignItems: 'center',
     backgroundColor: '#000',
   },
-  result: { flex: 5 / 20 },
+  result: { flex: 22 / 100 },
 });

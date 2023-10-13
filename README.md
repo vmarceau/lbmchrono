@@ -1,5 +1,7 @@
 # lbmchrono
-Personal race timing mobile app developed for the Limoilou Beer Mile 2023 (7th edition). Developed using React Native + Expo. 
+Personal race timing mobile app developed and used successfully for the Limoilou Beer Mile 2023 (7th edition).
+
+Made with React Native + Expo. 
 
 ## Screenshots
 

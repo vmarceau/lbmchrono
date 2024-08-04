@@ -1,5 +1,8 @@
-// Number of runners
-export const NUM_BIBS = 56;
+// Ideally, this data would be available from a server endpoint somewhere.
+// For simplicity, it is currently hard-coded in an asset file.
+export const RUNNERS = require('../assets/runners.json');
+
+export const MAX_BIBS = 56;
 
 // Results export
 export const EMAIL_SUBJECT = 'Résultats LBM';

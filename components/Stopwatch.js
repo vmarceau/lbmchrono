@@ -63,11 +63,15 @@ export default function Stopwatch() {
     const uri = `${FileSystem.documentDirectory}LBM_${new Date().toISOString()}.json`;
     await FileSystem.writeAsStringAsync(uri, JSON.stringify(finalResults, null, 2));
 
+    let emailBody = `${EMAIL_BODY}\n\n---\n`;
+    emailBody += `Rank -- Bib -- Name -- Gender -- Time\n`;
+    emailBody += finalResults.leaderboard
+      .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.name} -- ${r.gender} -- ${r.elapsed}`)
+      .join('\n');
+
     MailComposer.composeAsync({
       subject: EMAIL_SUBJECT,
-      body: `${EMAIL_BODY}\n\n---\n${finalResults.leaderboard
-        .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.elapsed}`)
-        .join('\n')}`,
+      body: emailBody,
       recipients: EMAIL_RECIPIENTS ? EMAIL_RECIPIENTS.split(',') : undefined,
       attachments: [uri],
       isHtml: false,

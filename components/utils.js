@@ -64,7 +64,7 @@ export const formatRaceResults = (startTime, results) => {
         rank: idx + 1,
         bib: r.id,
         name: runner?.name ?? 'UNKNOWN',
-        gender: runner?.gender ?? 'UNKNOWN',
+        gender: runner?.gender ?? 'ND',
         elapsed: r.elapsed === null ? 'DNF' : displayTime(r.elapsed),
         finishedAt: r.elapsed === null ? 'DNF' : new Date(startTime + r.elapsed).toISOString(),
       };

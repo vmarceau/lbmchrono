@@ -1,6 +1,10 @@
+import { Buffer } from 'buffer';
+
 // Ideally, this data would be available from a server endpoint somewhere.
-// For simplicity, it is currently hard-coded in an asset file.
-export const RUNNERS = require('../assets/runners.json');
+// For simplicity, it is currently passed as a base64 encoded env variable.
+const runnersBuffer = Buffer.from(process.env.EXPO_PUBLIC_RUNNERS, 'base64');
+const runnersJson = runnersBuffer.toString('utf-8');
+export const RUNNERS = JSON.parse(runnersJson);
 
 export const MAX_BIBS = 56;
 

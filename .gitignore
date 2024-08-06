@@ -3,7 +3,7 @@ node_modules/
 dist/
 npm-debug.*
 assets/.xdp*
-assets/runners*.json
+runners*.json
 *.jks
 *.p8
 *.p12

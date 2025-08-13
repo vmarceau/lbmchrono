@@ -58,7 +58,7 @@ export const formatRaceResults = (startTime, results) => {
       return l.elapsed - r.elapsed;
     })
     .map((r, idx) => {
-      const runner = runnersByBib[r.id]
+      const runner = runnersByBib[r.id];
 
       return {
         rank: idx + 1,
@@ -76,4 +76,19 @@ export const formatRaceResults = (startTime, results) => {
     metadata,
     leaderboard,
   };
+};
+
+export const topNByGender = (leaderboard, N, gender) => {
+  const topN = [];
+
+  for (const r of leaderboard) {
+    if (r.gender === gender && r.elapsed !== 'DNF') {
+      topN.push(r);
+      if (topN.length >= N) {
+        break;
+      }
+    }
+  }
+
+  return topN;
 };

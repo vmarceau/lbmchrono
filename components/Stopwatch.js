@@ -8,7 +8,7 @@ import * as FileSystem from 'expo-file-system';
 import Result from './Result';
 import Bibs from './Bibs';
 import Control from './Control';
-import { displayTime, formatRaceResults, getElapsedTime, initResults } from './utils';
+import { displayTime, formatRaceResults, getElapsedTime, initResults, topNByGender } from './utils';
 import BmHeader from './Header';
 import { EMAIL_BODY, EMAIL_RECIPIENTS, EMAIL_SUBJECT } from './constants';
 
@@ -59,11 +59,27 @@ export default function Stopwatch() {
     }
 
     const finalResults = formatRaceResults(startTime.current, results);
+    const topNM = topNByGender(finalResults.leaderboard, 3, 'M');
+    const topNF = topNByGender(finalResults.leaderboard, 3, 'F');
 
     const uri = `${FileSystem.documentDirectory}LBM_${new Date().toISOString()}.json`;
     await FileSystem.writeAsStringAsync(uri, JSON.stringify(finalResults, null, 2));
 
     let emailBody = `${EMAIL_BODY}\n\n---\n`;
+
+    emailBody += 'TOP 3 MEN\n'
+    emailBody += `Rank -- Bib -- Name -- Gender -- Time\n`;
+    emailBody += topNM
+      .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.name} -- ${r.gender} -- ${r.elapsed}`)
+      .join('\n');
+
+    emailBody += '\n\nTOP 3 WOMEN\n'
+    emailBody += `Rank -- Bib -- Name -- Gender -- Time\n`;
+    emailBody += topNF
+      .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.name} -- ${r.gender} -- ${r.elapsed}`)
+      .join('\n');
+
+    emailBody += '\n\nFULL\n'
     emailBody += `Rank -- Bib -- Name -- Gender -- Time\n`;
     emailBody += finalResults.leaderboard
       .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.name} -- ${r.gender} -- ${r.elapsed}`)
@@ -134,7 +150,7 @@ const styles = StyleSheet.create({
     paddingTop: Constants.statusBarHeight,
   },
   header: {
-    flex: 12 / 100,
+    flex: 10 / 100,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#000',
@@ -153,7 +169,7 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   bibs: {
-    flex: 40 / 100,
+    flex: 42 / 100,
     flexDirection: 'row',
   },
   control: {

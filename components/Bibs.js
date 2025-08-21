@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 import {
   COLOR_BIB_BTN_BG,
   COLOR_BIB_BTN_TEXT,
@@ -28,6 +28,11 @@ function Bibs({ results, handleBibButtonPress }) {
   return <View style={styles.container}>{bibs}</View>;
 }
 
+const { width: screenWidth } = Dimensions.get('window');
+const buttonsPerRow = 8;
+const spacing = 10;
+const buttonSize = (0.95 * screenWidth - spacing * (buttonsPerRow + 1)) / buttonsPerRow;
+
 const CENTER = {
   justifyContent: 'center',
   alignItems: 'center',
@@ -43,16 +48,16 @@ const styles = StyleSheet.create({
   },
   controlButtonBorder: {
     ...CENTER,
-    width: 32,
-    height: 32,
-    borderRadius: 32,
-    margin: 5,
+    width: buttonSize,
+    height: buttonSize,
+    borderRadius: buttonSize,
+    margin: spacing / 2,
   },
   controlButton: {
     ...CENTER,
-    width: 27,
-    height: 27,
-    borderRadius: 27,
+    width: buttonSize * 0.8,
+    height: buttonSize * 0.8,
+    borderRadius: buttonSize * 0.8,
     borderColor: '#000',
     borderWidth: 1,
   },

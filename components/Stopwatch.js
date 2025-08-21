@@ -25,6 +25,7 @@ export default function Stopwatch() {
         return;
       }
 
+      // This is bad, should be optimized.
       const newResults = [...results].map((r) =>
         r.id === id
           ? { ...r, elapsed: r.elapsed === null ? getElapsedTime(startTime.current) : null }
@@ -106,7 +107,7 @@ export default function Stopwatch() {
           // Avoid updating elapsed time state too often to minimize rendering
           return next - prev > 1000 ? next : prev;
         });
-      }, 50);
+      }, 100);
       timer.current = interval;
     } else {
       clearInterval(timer.current);

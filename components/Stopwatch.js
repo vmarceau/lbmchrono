@@ -67,19 +67,19 @@ export default function Stopwatch() {
 
     let emailBody = `${EMAIL_BODY}\n\n---\n`;
 
-    emailBody += 'TOP 3 MEN\n'
+    emailBody += 'TOP 3 MEN\n';
     emailBody += `Rank -- Bib -- Name -- Gender -- Time\n`;
     emailBody += topNM
       .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.name} -- ${r.gender} -- ${r.elapsed}`)
       .join('\n');
 
-    emailBody += '\n\nTOP 3 WOMEN\n'
+    emailBody += '\n\nTOP 3 WOMEN\n';
     emailBody += `Rank -- Bib -- Name -- Gender -- Time\n`;
     emailBody += topNF
       .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.name} -- ${r.gender} -- ${r.elapsed}`)
       .join('\n');
 
-    emailBody += '\n\nFULL\n'
+    emailBody += '\n\nFULL\n';
     emailBody += `Rank -- Bib -- Name -- Gender -- Time\n`;
     emailBody += finalResults.leaderboard
       .map((r) => `${r.rank}. -- Bib #${r.bib} -- ${r.name} -- ${r.gender} -- ${r.elapsed}`)
@@ -169,15 +169,15 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
   },
   bibs: {
-    flex: 42 / 100,
+    flex: 45 / 100,
     flexDirection: 'row',
   },
   control: {
-    flex: 14 / 100,
+    flex: 13 / 100,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: '#000',
   },
-  result: { flex: 22 / 100 },
+  result: { flex: 20 / 100 },
 });

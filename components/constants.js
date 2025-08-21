@@ -6,7 +6,7 @@ const runnersBuffer = Buffer.from(process.env.EXPO_PUBLIC_RUNNERS, 'base64');
 const runnersJson = runnersBuffer.toString('utf-8');
 export const RUNNERS = JSON.parse(runnersJson);
 
-export const MAX_BIBS = 58;
+export const MAX_BIBS = 64;
 
 // Results export
 export const EMAIL_SUBJECT = 'Résultats LBM';
